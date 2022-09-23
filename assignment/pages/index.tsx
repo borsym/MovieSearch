@@ -1,54 +1,77 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Link from 'next/link';
-import useFetch from '../hooks/useFetch';
 import { useContext, useEffect, useState } from 'react';
-import { options } from '../constans';
+
 import GenreReccomendations from '../components/GenreReccomendations';
-import MultipleSelectChip from '../components/common/MultipleSelectChip';
-import { GenreContextType, GenresContext } from '../contexts/GenresContext';
-import CostumeCard from '../components/common/MediaCard';
-import MediaCard from '../components/common/MediaCard';
-import { Button, Card, CardActionArea, CardActions, Grid } from '@mui/material';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import Widget from '../components/dnd/Widget';
-import { Box } from '@mui/system';
 import SearchBar from '../components/SearchBar';
+import Column from '../components/dnd/Column';
+
+import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 
-const WidgetList = ({ data }: any) => {
-  return data?.map((element: any, index: any) => (
-    <Widget element={element} index={index} key={element.id} />
-  ));
-};
+import { Box } from '@mui/system';
+import { Button, Card, CardActionArea, CardActions, Grid } from '@mui/material';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-const Column = ({ data, droppableId }: any) => {
-  return (
-    <Droppable droppableId={droppableId}>
-      {(provided) => (
-        <Box
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          bgcolor="primary.main"
-          sx={{ width: 2 / 4 }}
-        >
-          <WidgetList data={data} />
-          {provided.placeholder}
-        </Box>
-      )}
-    </Droppable>
-  );
-};
 const Home: NextPage = () => {
   const { genres } = useContext(GenresContext) as GenreContextType;
-  const { titles } = useContext(TitlesContext) as TitlesContextType;
+  const { titles, updateTiltes } = useContext(
+    TitlesContext
+  ) as TitlesContextType;
+  const [favourites, setFavourites] = useState<any[]>([]);
 
   //"next": "/titles/search/title/Spiderman?page=2"  igy kell majd a tobbi adatot betolteni
   const onDragEnd = (result: any) => {
-    
-    // tehat egy masik box amibe belemegy
+    // this has to be more generic, maybe a new file where I store the data as a json where the columns has ID
+    console.log(result);
+    const { source, destination, draggableId } = result;
+    if (!destination) return;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = source.droppableId === 'movies' ? titles : favourites;
+    const finish = destination.droppableId === 'movies' ? titles : favourites;
+
+    if (start === finish) {
+      if (source.droppableId === 'movies') {
+        const items = Array.from(titles);
+        const [reOrderdTitels] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reOrderdTitels);
+        updateTiltes(items);
+        return;
+      } else {
+        const items = Array.from(favourites);
+        const [reOrderdTitels] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reOrderdTitels);
+
+        setFavourites(items);
+        return;
+      }
+    }
+
+    // Moving from one list to another
+    const copiedStart = Array.from(start);
+    const copiedFinish = Array.from(finish);
+    const move = copiedStart.find((x) => x.id === draggableId);
+
+    copiedStart.splice(source.index, 1);
+    copiedFinish.splice(destination.index, 0, move);
+
+    if (source.droppableId === 'movies') {
+      updateTiltes(copiedStart);
+      setFavourites(copiedFinish);
+    } else {
+      updateTiltes(copiedFinish);
+      setFavourites(copiedStart);
+    }
   };
 
   // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
@@ -66,7 +89,7 @@ const Home: NextPage = () => {
             </Grid>
             <Grid item container xs={6}>
               <Grid item xs={12} style={{ backgroundColor: 'red' }}>
-                <Column droppableId="favourite" />
+                <Column data={favourites} droppableId="favourite" />
               </Grid>
             </Grid>
           </Grid>

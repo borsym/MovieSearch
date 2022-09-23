@@ -7,6 +7,7 @@ export type TitlesContextType = {
   nextUrl: string | null;
   search: (title: string) => void;
   fetchNextPage: () => void;
+  updateTiltes: (titels: any[]) => void;
 };
 
 export const TitlesContext = createContext<TitlesContextType>({
@@ -14,6 +15,7 @@ export const TitlesContext = createContext<TitlesContextType>({
   nextUrl: null,
   search: () => {},
   fetchNextPage: () => {}, // maybe write here async
+  updateTiltes: () => {},
 });
 
 export const TitlesProvider = (props: any) => {
@@ -45,6 +47,10 @@ export const TitlesProvider = (props: any) => {
     }
   };
 
+  const updateTiltes = (titels: any[]) => {
+    setTitles(titels);
+  };
+
   return (
     <TitlesContext.Provider
       value={{
@@ -52,6 +58,7 @@ export const TitlesProvider = (props: any) => {
         nextUrl: nextUrl,
         search: search,
         fetchNextPage: fetchNextPage,
+        updateTiltes: updateTiltes,
       }}
     >
       {props.children}
