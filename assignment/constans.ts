@@ -5,3 +5,5 @@ export const options = {
     'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
   },
 };
+
+export const baseUrl = 'https://moviesdatabase.p.rapidapi.com';

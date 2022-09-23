@@ -14,60 +14,65 @@ import MediaCard from '../components/common/MediaCard';
 import { Button, Card, CardActionArea, CardActions, Grid } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import Widget from '../components/dnd/Widget';
+import { Box } from '@mui/system';
+import SearchBar from '../components/SearchBar';
+import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 
-const WidgetList = (data: any) => {
-  return data?.results?.map((element: any, index: any) => (
+const WidgetList = ({ data }: any) => {
+  return data?.map((element: any, index: any) => (
     <Widget element={element} index={index} key={element.id} />
   ));
 };
 
-const Home: NextPage = () => {
-  const [inputVal, setInputVal] = useState('');
-  const text = 'Action';
-  const { genres } = useContext(GenresContext) as GenreContextType;
-  // quary parameterekre ra kell jonni
-  let urlSearch = new URL(
-    `https://moviesdatabase.p.rapidapi.com/titles/search/title/${inputVal}?info=base_info&genre=Action`
+const Column = ({ data, droppableId }: any) => {
+  return (
+    <Droppable droppableId={droppableId}>
+      {(provided) => (
+        <Box
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          bgcolor="primary.main"
+          sx={{ width: 2 / 4 }}
+        >
+          <WidgetList data={data} />
+          {provided.placeholder}
+        </Box>
+      )}
+    </Droppable>
   );
-  const { data, loading, error } = useFetch(urlSearch.toString(), options);
-
-  useEffect(() => {
-    // urlSearch.searchParams.append('genre', genres[0]);
-  }, [genres]);
+};
+const Home: NextPage = () => {
+  const { genres } = useContext(GenresContext) as GenreContextType;
+  const { titles } = useContext(TitlesContext) as TitlesContextType;
 
   //"next": "/titles/search/title/Spiderman?page=2"  igy kell majd a tobbi adatot betolteni
   const onDragEnd = (result: any) => {
-    console.log(result);
+    
     // tehat egy masik box amibe belemegy
   };
 
   // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
   return (
-    <div>
-      <p>home</p>
-      Read <Link href="/details">this page!</Link>
-      <input
-        type="text"
-        placeholder="Enter the title of the movie"
-        value={inputVal}
-        onChange={(e) => setInputVal(e.target.value)}
-      />
+    <>
+      <SearchBar />
       <GenreReccomendations />
-      {loading ? (
-        <p>loading...</p>
-      ) : (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="movies">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
-                <WidgetList data={data} />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      )}
-    </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Grid sx={{ flexGrow: 1 }}>
+          <Grid container spacing={3}>
+            <Grid item container xs={6} alignContent="baseline">
+              <Grid item xs={12} style={{ backgroundColor: 'yellow' }}>
+                <Column data={titles} droppableId="movies" />
+              </Grid>
+            </Grid>
+            <Grid item container xs={6}>
+              <Grid item xs={12} style={{ backgroundColor: 'red' }}>
+                <Column droppableId="favourite" />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </DragDropContext>
+    </>
   );
 };
 
