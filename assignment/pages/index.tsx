@@ -1,15 +1,11 @@
 import type { NextPage } from 'next';
-import { useContext, useEffect, useState, useRef, useCallback } from 'react';
+import { useContext, useRef, useCallback, useState, useEffect } from 'react';
 
 import GenreReccomendations from '../components/GenreReccomendations';
 import SearchBar from '../components/SearchBar';
-import Column from '../components/dnd/Column';
-
-import { GenreContextType, GenresContext } from '../contexts/GenresContext';
-import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import DnD from '../components/dnd/DnD';
-import MediaCard from '../components/common/MediaCard';
-import TheNewMediaCard from '../components/common/TheNewMediaCard';
+
+import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 
 const Home: NextPage = () => {
   const {
@@ -20,9 +16,13 @@ const Home: NextPage = () => {
     fetchNextPage,
     updateFavourites,
   } = useContext(TitlesContext) as TitlesContextType;
+  const [isBrowser, setIsBrowser] = useState(false); // next + mui not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
 
-  // const [favourites, setFavourites] = useState<any[]>([]);
   const observer = useRef<any>();
+
+  useEffect(() => {
+    setIsBrowser(process.browser);
+  }, []);
   // We do not have to check the last element is moved to the fav col
   const lastTitleElementRef = useCallback(
     (node: any) => {
@@ -93,18 +93,19 @@ const Home: NextPage = () => {
       updateFavourites(copiedStart);
     }
   };
-
   // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
   return (
     <>
       <SearchBar />
       <GenreReccomendations />
-      <DnD
-        titles={titles}
-        favourites={favourites}
-        onDragEnd={onDragEnd}
-        lastTitleElementRef={lastTitleElementRef}
-      />
+      {isBrowser ? (
+        <DnD
+          titles={titles}
+          favourites={favourites}
+          onDragEnd={onDragEnd}
+          lastTitleElementRef={lastTitleElementRef}
+        />
+      ) : null}
     </>
   );
 };

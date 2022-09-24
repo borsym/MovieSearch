@@ -1,10 +1,11 @@
-import { Button, IconButton, TextField, Grid } from '@mui/material';
+import React, { useContext, useState, useRef } from 'react';
+
+import { IconButton, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
-import InputAdornment from '@mui/material/InputAdornment';
-import Divider from '@mui/material/Divider';
-import React, { useContext, useState, useRef } from 'react';
+import { InputAdornment, Divider } from '@mui/material';
+
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 

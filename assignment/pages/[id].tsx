@@ -1,9 +1,10 @@
+import Link from 'next/link';
+import React from 'react';
+
 import { Grid, Rating, Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
 
-import React from 'react';
 import { options } from '../constans';
-import Link from 'next/link';
 
 export const getStaticPaths = async () => {
   return {

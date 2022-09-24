@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import useFetch from '../hooks/useFetch';
-import { options } from '../constans';
+
 import MultipleSelectChip from './common/MultipleSelectChip';
+
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
-import { Box } from '@mui/system';
+
+
+import { options } from '../constans';
 
 const GenreReccomendations = () => {
   const urlGenres = new URL(

@@ -1,13 +1,9 @@
 import React, {
   createContext,
-  useEffect,
-  useReducer,
   useState,
-  useContext,
 } from 'react';
 import { baseUrl, options } from '../constans';
 import useFetch from '../hooks/useFetch';
-import { GenreContextType, GenresContext } from './GenresContext';
 
 export type TitlesContextType = {
   titles: any[];

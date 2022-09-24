@@ -1,6 +1,8 @@
 import WidgetList from './WidgetList';
+
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
+
 import { Droppable } from 'react-beautiful-dnd';
 
 const Column = ({ data, droppableId, lastTitleElementRef, title }: any) => {
