@@ -32,7 +32,7 @@ const getStyles = (name: string, context: readonly string[], theme: Theme) => {
 interface Props {
   loading: boolean;
   title: string;
-  items: any[]; // TODO
+  items: string[];
   context: string[];
   add: (genre: string[]) => void;
 }

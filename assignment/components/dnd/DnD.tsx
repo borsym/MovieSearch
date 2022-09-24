@@ -3,10 +3,22 @@ import MovieCard from './MovieCard';
 import { Grid } from '@mui/material';
 
 import { DragDropContext } from 'react-beautiful-dnd';
+import { TitleProps } from '../../types';
 
-const DnD = (props: any) => {
+interface Props {
+  titles: TitleProps[];
+  favourites: TitleProps[];
+  onDragEnd: () => {};
+  lastTitleElementRef: () => {};
+}
+const DnD: React.FC<Props> = ({
+  titles,
+  favourites,
+  onDragEnd,
+  lastTitleElementRef,
+}) => {
   return (
-    <DragDropContext onDragEnd={props.onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Grid
         item
         sx={{
@@ -17,9 +29,9 @@ const DnD = (props: any) => {
           <Grid item container xs={6} alignContent="baseline">
             <Grid item xs={12}>
               <MovieCard
-                data={props.titles}
+                data={titles}
                 droppableId="movies"
-                lastTitleElementRef={props.lastTitleElementRef}
+                lastTitleElementRef={lastTitleElementRef}
                 title="Movies"
               />
             </Grid>
@@ -27,7 +39,7 @@ const DnD = (props: any) => {
           <Grid item container xs={6}>
             <Grid item xs={12}>
               <MovieCard
-                data={props.favourites}
+                data={favourites}
                 droppableId="favourite"
                 title="Favourites"
               />

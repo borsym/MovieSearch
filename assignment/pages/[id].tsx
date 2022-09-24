@@ -26,15 +26,15 @@ export const getStaticProps = async (context: any) => {
 };
 
 const Details = (props: any) => {
-  const details = props.details?.results; // ?? 
-  const imgUrl = details.primaryImage
+  const details = props.details?.results; // ??
+  const imgUrl = details?.primaryImage
     ? details.primaryImage.url
     : 'not-found.png';
 
-  const alt = details.primaryImage?.caption
+  const alt = details?.primaryImage?.caption
     ? details.primaryImage.caption.plainText
     : 'Image';
-  const description = details.plot?.plotText?.plainText;
+  const description = details?.plot?.plotText?.plainText;
 
   return (
     <Grid container item spacing={0} sx={{ p: 10 }}>

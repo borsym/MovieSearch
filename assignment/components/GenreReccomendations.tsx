@@ -12,7 +12,6 @@ const GenreReccomendations = () => {
     'https://moviesdatabase.p.rapidapi.com/titles/utils/genres'
   );
   const { data, loading, error } = useFetch(urlGenres.toString(), options);
-
   const { genres, addGenre } = useContext(GenresContext) as GenreContextType;
 
   return loading ? (

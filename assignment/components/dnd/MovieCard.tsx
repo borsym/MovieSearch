@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import WidgetList from './WidgetList';
 
-import { GenreContextType, GenresContext } from '../../contexts/GenresContext';
-
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 
 import { Droppable } from 'react-beautiful-dnd';
 
-import { Result } from '../../types';
 
 const MovieCard = ({ data, droppableId, lastTitleElementRef, title }: any) => {
   // this was my idea to filter for multiple genres but I couldn't solve the fetching...
