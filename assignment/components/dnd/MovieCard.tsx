@@ -5,9 +5,21 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 
 import { Droppable } from 'react-beautiful-dnd';
+import { TitleProps } from '../../types';
 
+interface Props {
+  data: TitleProps[];
+  title: string;
+  droppableId: string;
+  lastTitleElementRef: () => {};
+}
 
-const MovieCard = ({ data, droppableId, lastTitleElementRef, title }: any) => {
+const MovieCard: React.FC<Props> = ({
+  data,
+  droppableId,
+  lastTitleElementRef,
+  title,
+}) => {
   // this was my idea to filter for multiple genres but I couldn't solve the fetching...
   // const { genres } = useContext<GenreContextType>(GenresContext);
   // const filterFn = (e: Result) => {

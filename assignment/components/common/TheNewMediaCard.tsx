@@ -14,29 +14,31 @@ import {
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box } from '@mui/system';
+import { Result } from '../../types';
 
-const TheNewMediaCard = (props: any) => {
+interface Props {
+  data: Result;
+  droppableId: string;
+}
+
+const TheNewMediaCard: React.FC<Props> = ({ data, droppableId }) => {
   const { titles, favourites, updateTiltes, updateFavourites } = useContext(
     TitlesContext
   ) as TitlesContextType;
 
-  const imgUrl = props.data.primaryImage
-    ? props.data.primaryImage.url
-    : 'not-found.png';
-  const year = props.data?.releaseYear?.year
-    ? props.data?.releaseYear?.year
-    : 'No data';
-  const titleType = props.data?.titleType?.text
-    ? props.data?.titleType?.text
+  const imgUrl = data.primaryImage ? data.primaryImage.url : 'not-found.png';
+  const year = data?.releaseYear?.year ? data?.releaseYear?.year : 'No data';
+  const titleType = data?.titleType?.text
+    ? data?.titleType?.text
     : 'No title type';
-  const alt = props.data.primaryImage?.caption
-    ? props.data.primaryImage.caption.plainText
+  const alt = data.primaryImage?.caption
+    ? data.primaryImage.caption.plainText
     : 'Image';
-  const runTime = parseInt(props.data?.runtime?.seconds)
-    ? `${parseInt(props.data?.runtime?.seconds) / 60} min`
+  const runTime = data?.runtime?.seconds
+    ? `${data?.runtime?.seconds / 60} min`
     : 'Not available';
-  const rating = props.data?.ratingsSummary?.aggregateRating
-    ? `${props.data?.ratingsSummary?.aggregateRating}/10`
+  const rating = data?.ratingsSummary?.aggregateRating
+    ? `${data?.ratingsSummary?.aggregateRating}/10`
     : 'No data';
 
   const onClickFavourite = () => {
@@ -44,18 +46,18 @@ const TheNewMediaCard = (props: any) => {
     const copiedMovies = Array.from(titles);
     const copiedFavourites = Array.from(favourites);
 
-    if (props.droppableId !== 'movies') {
+    if (droppableId !== 'movies') {
       const index = copiedFavourites.findIndex((object) => {
-        return object.id === props.data.id;
+        return object.id === data.id;
       });
       copiedFavourites.splice(index, 1);
-      copiedMovies.splice(index, 0, props.data);
+      copiedMovies.splice(index, 0, data);
     } else {
       const index = copiedMovies.findIndex((object) => {
-        return object.id === props.data.id;
+        return object.id === data.id;
       });
       copiedMovies.splice(index, 1);
-      copiedFavourites.splice(index, 0, props.data);
+      copiedFavourites.splice(index, 0, data);
     }
 
     updateTiltes(copiedMovies);
@@ -68,7 +70,7 @@ const TheNewMediaCard = (props: any) => {
           <CardMedia component="img" height="200" image={imgUrl} alt={alt} />
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h5">{props.data?.titleText?.text}</Typography>
+          <Typography variant="h5">{data?.titleText?.text}</Typography>
           <Typography variant="h5">{rating}</Typography>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -86,10 +88,10 @@ const TheNewMediaCard = (props: any) => {
         <Box>
           <IconButton aria-label="add to favorites" onClick={onClickFavourite}>
             <FavoriteIcon
-              style={{ color: props.droppableId !== 'movies' ? 'red' : '' }}
+              style={{ color: droppableId !== 'movies' ? 'red' : '' }}
             />
           </IconButton>
-          <Link href={'/' + props.data.id}>
+          <Link href={'/' + data.id}>
             <CardActionArea>
               <CardActions
                 sx={{ display: 'flex', justifyContent: 'space-around' }}

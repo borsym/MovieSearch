@@ -54,7 +54,7 @@ const Details = (props: any) => {
       <Grid container item xs={12} md={6} direction="column">
         <Box sx={{ width: '100%' }}>
           <Typography variant="h3" align="left" sx={{ p: 0, m: 0 }}>
-            {details.titleText?.text}
+            {details?.titleText?.text}
           </Typography>
         </Box>
         <Box sx={{ width: '100%' }}>
@@ -64,17 +64,17 @@ const Details = (props: any) => {
             align="left"
             sx={{ ml: 1 }}
           >
-            {details.plot?.language?.id} / {details.titleType?.text} /{' '}
-            {details.releaseYear?.year}
+            {details?.plot?.language?.id} / {details?.titleType?.text} /{' '}
+            {details?.releaseYear?.year}
           </Typography>
         </Box>
         <Box sx={{ width: '100%', display: 'flex', align: 'left', ml: 1 }}>
           <Typography sx={{ mr: 0.5, fontWeight: 'bold', color: '#FAAF00' }}>
-            {details.ratingsSummary?.aggregateRating}{' '}
+            {details?.ratingsSummary?.aggregateRating}{' '}
           </Typography>
           <Rating
             name="read-only"
-            value={Math.round(details.ratingsSummary?.aggregateRating) / 2}
+            value={Math.round(details?.ratingsSummary?.aggregateRating) / 2}
             readOnly
           />
         </Box>
@@ -84,8 +84,8 @@ const Details = (props: any) => {
             variant="overline"
             align="left"
           >
-            {details.genres?.genres.map((genre: any, idx: number) => {
-              return details.genres?.genres.length !== idx + 1
+            {details?.genres?.genres.map((genre: any, idx: number) => {
+              return details?.genres?.genres.length !== idx + 1
                 ? genre.text + ' / '
                 : genre.text;
             })}
