@@ -25,7 +25,7 @@ export const TitlesProvider = (props: any) => {
   const search = async (title: string) => {
     /// check if i can use the useFetch
     const res = await fetch(
-      `${baseUrl}/titles/search/title/${title}?info=base_info&limit=10&page=1`,
+      `${baseUrl}/titles/search/title/${title}?info=base_info&limit=10&page=1&genre=Action`,
       options
     );
 

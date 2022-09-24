@@ -9,6 +9,8 @@ import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import DnD from '../components/dnd/DnD';
 import { Button } from '@mui/material';
+import MediaCard from '../components/common/MediaCard';
+import TheNewMediaCard from '../components/common/TheNewMediaCard';
 
 const Home: NextPage = () => {
   const { genres } = useContext(GenresContext) as GenreContextType;
@@ -20,10 +22,11 @@ const Home: NextPage = () => {
   // We do not have to check the last element is moved to the fav col
   const lastTitleElementRef = useCallback(
     (node: any) => {
-      // if(loading) return; ? 
+      // if(loading) return; ?
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && nextUrl !== null) { // on the page somewhere and we can see - entires length always 1
+        if (entries[0].isIntersecting && nextUrl !== null) {
+          // on the page somewhere and we can see - entires length always 1
           fetchNextPage();
         }
       });
@@ -89,12 +92,10 @@ const Home: NextPage = () => {
     }
   };
 
-
   // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
   return (
     <>
       <SearchBar />
-      <Button onClick={() => fetchNextPage()}>fetch</Button>
       <GenreReccomendations />
       <DnD
         titles={titles}

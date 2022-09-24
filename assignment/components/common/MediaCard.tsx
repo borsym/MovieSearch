@@ -7,9 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Link from 'next/link';
-
 const MediaCard = (props: any) => {
-// a react-beautiful-dnd fele kartyakat kene csinalnom
+  // a react-beautiful-dnd fele kartyakat kene csinalnom
   const imgUrl = props.data.primaryImage
     ? props.data.primaryImage.url
     : 'https://i.picsum.photos/id/504/536/354.jpg?hmac=zZqkNcPlphLOPXp316SfRWkNFXoyGEh2elLvfSptGcQ';
@@ -19,7 +18,7 @@ const MediaCard = (props: any) => {
     : 'Image';
   return (
     <Card sx={{ maxWidth: 345 }}>
-      {/* <CardMedia component="img" height="140" image={imgUrl} alt={alt} /> */}
+      <CardMedia component="img" height="140" image={imgUrl} alt={alt} />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
           {description ? description : 'No documentation'}
@@ -35,6 +34,6 @@ const MediaCard = (props: any) => {
       </CardActionArea>
     </Card>
   );
-}
+};
 
 export default MediaCard;

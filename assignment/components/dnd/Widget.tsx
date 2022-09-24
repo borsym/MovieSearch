@@ -1,5 +1,6 @@
 import { Draggable } from 'react-beautiful-dnd';
 import MediaCard from '../common/MediaCard';
+import TheNewMediaCard from '../common/TheNewMediaCard';
 
 const Widget = (props: any) => {
   return (
@@ -11,7 +12,12 @@ const Widget = (props: any) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            <MediaCard
+            {/* <MediaCard
+              key={props.element.id}
+              title={props.element?.titleText.text}
+              data={props.element}
+            /> */}
+            <TheNewMediaCard
               key={props.element.id}
               title={props.element?.titleText.text}
               data={props.element}
