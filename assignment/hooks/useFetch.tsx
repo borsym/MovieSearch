@@ -9,6 +9,8 @@ const useFetch = (url: string, options?: object): Ret => {
   const [data, setData] = useState<any | null>(null);
   const [loading, setLoading] = useState<Boolean>(false);
   const [error, setError] = useState<string>('');
+
+  const controller = new AbortController();
   useEffect(() => {
     setLoading(true);
     fetch(url, options)
@@ -21,8 +23,17 @@ const useFetch = (url: string, options?: object): Ret => {
       .then((data) => {
         setData(data);
       })
-      .catch((err) => setError(err))
+      .catch((err) => {
+        if (controller.signal.aborted) {
+          console.log('The user aborted the request');
+        } else {
+          console.error('The request failed');
+        }
+        setError(err);
+      })
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [url]);
 
   return { data, loading, error };

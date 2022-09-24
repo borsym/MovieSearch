@@ -42,8 +42,11 @@ export const TitlesProvider = (props: any) => {
 
     if (res?.ok) {
       const data = await res.json();
-      setTitles([...titles, data.results]);
-      setNextUrl(data.next);
+      setTitles(() => [...titles, ...data.results]);
+      console.log(titles);
+      console.log(data.results);
+      console.log([...titles, ...data.results]);
+      setNextUrl(() => data.next);
     }
   };
 

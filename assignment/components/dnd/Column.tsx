@@ -3,7 +3,7 @@ import WidgetList from './WidgetList';
 import { Box } from '@mui/system';
 import { Droppable } from 'react-beautiful-dnd';
 
-const Column = ({ data, droppableId }: any) => {
+const Column = ({ data, droppableId, lastTitleElementRef }: any) => {
   return (
     <Droppable droppableId={droppableId}>
       {(provided) => (
@@ -13,7 +13,7 @@ const Column = ({ data, droppableId }: any) => {
           bgcolor="primary.main"
           sx={{ width: 2 / 4 }}
         >
-          <WidgetList data={data} />
+          <WidgetList data={data} lastTitleElementRef={lastTitleElementRef}/>
           {provided.placeholder}
         </Box>
       )}

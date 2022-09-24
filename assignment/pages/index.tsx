@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import GenreReccomendations from '../components/GenreReccomendations';
 import SearchBar from '../components/SearchBar';
@@ -7,19 +7,34 @@ import Column from '../components/dnd/Column';
 
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
-
-import { Box } from '@mui/system';
-import { Button, Card, CardActionArea, CardActions, Grid } from '@mui/material';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import DnD from '../components/dnd/DnD';
+import { Button } from '@mui/material';
 
 const Home: NextPage = () => {
   const { genres } = useContext(GenresContext) as GenreContextType;
-  const { titles, updateTiltes } = useContext(
+  const { titles, updateTiltes, fetchNextPage, nextUrl } = useContext(
     TitlesContext
   ) as TitlesContextType;
   const [favourites, setFavourites] = useState<any[]>([]);
+  const observer = useRef<any>();
+  // We do not have to check the last element is moved to the fav col
+  const lastTitleElementRef = useCallback(
+    (node: any) => {
+      // if(loading) return; ? 
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && nextUrl !== null) { // on the page somewhere and we can see - entires length always 1
+          fetchNextPage();
+        }
+      });
 
-  //"next": "/titles/search/title/Spiderman?page=2"  igy kell majd a tobbi adatot betolteni
+      if (node) observer.current.observe(node);
+    },
+    [nextUrl] // loading?
+  );
+
+  console.log('nextURL', nextUrl);
+  // make a more cleaner code!
   const onDragEnd = (result: any) => {
     // this has to be more generic, maybe a new file where I store the data as a json where the columns has ID
     console.log(result);
@@ -74,27 +89,19 @@ const Home: NextPage = () => {
     }
   };
 
+
   // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
   return (
     <>
       <SearchBar />
+      <Button onClick={() => fetchNextPage()}>fetch</Button>
       <GenreReccomendations />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Grid sx={{ flexGrow: 1 }}>
-          <Grid container spacing={3}>
-            <Grid item container xs={6} alignContent="baseline">
-              <Grid item xs={12} style={{ backgroundColor: 'yellow' }}>
-                <Column data={titles} droppableId="movies" />
-              </Grid>
-            </Grid>
-            <Grid item container xs={6}>
-              <Grid item xs={12} style={{ backgroundColor: 'red' }}>
-                <Column data={favourites} droppableId="favourite" />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </DragDropContext>
+      <DnD
+        titles={titles}
+        favourites={favourites}
+        onDragEnd={onDragEnd}
+        lastTitleElementRef={lastTitleElementRef}
+      />
     </>
   );
 };

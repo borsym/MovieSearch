@@ -1,9 +1,19 @@
-import Widget from "./Widget";
+import Widget from './Widget';
 
-const WidgetList = ({ data }: any) => {
-  return data?.map((element: any, index: any) => (
-    <Widget element={element} index={index} key={element.id} />
-  ));
+const WidgetList = ({ data, lastTitleElementRef }: any) => {
+  return data?.map((element: any, index: any) => {
+    if (data.length === index + 1) {
+      return (
+        <Widget
+          element={element}
+          index={index}
+          key={element.id}
+          lastTitleElementRef={lastTitleElementRef}
+        />
+      );
+    }
+    return <Widget element={element} index={index} key={element.id} />;
+  });
 };
 
 export default WidgetList;
