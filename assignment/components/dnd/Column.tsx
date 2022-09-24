@@ -25,7 +25,7 @@ const Column = ({ data, droppableId, lastTitleElementRef, title }: any) => {
               background: snapshot.isDraggingOver ? 'lightblue' : '',
             }}
           >
-            <WidgetList data={data} lastTitleElementRef={lastTitleElementRef} />
+            <WidgetList data={data} lastTitleElementRef={lastTitleElementRef} droppableId={droppableId}/>
             {provided.placeholder}
           </Box>
         )}

@@ -29,7 +29,7 @@ const Details = (props: any) => {
   const details = props.details?.results;
   const imgUrl = details.primaryImage
     ? details.primaryImage.url
-    : 'https://i.picsum.photos/id/504/536/354.jpg?hmac=zZqkNcPlphLOPXp316SfRWkNFXoyGEh2elLvfSptGcQ';
+    : 'not-found.png';
 
   const alt = details.primaryImage?.caption
     ? details.primaryImage.caption.plainText

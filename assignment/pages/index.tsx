@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     fetchNextPage,
     updateFavourites,
   } = useContext(TitlesContext) as TitlesContextType;
-  const [isBrowser, setIsBrowser] = useState(false); // next + mui not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
+  const [isBrowser, setIsBrowser] = useState(false); // next + r-beut-dnd not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
 
   const observer = useRef<any>();
 
@@ -34,7 +34,6 @@ const Home: NextPage = () => {
           fetchNextPage();
         }
       });
-
       if (node) observer.current.observe(node);
     },
     [nextUrl] // loading?

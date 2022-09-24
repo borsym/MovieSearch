@@ -13,6 +13,7 @@ const Widget = (props: any) => {
             {...provided.dragHandleProps}
           >
             <TheNewMediaCard
+              droppableId={props.droppableId}
               key={props.element.id}
               title={props.element?.titleText.text}
               data={props.element}

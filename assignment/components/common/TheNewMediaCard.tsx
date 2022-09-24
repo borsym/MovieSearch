@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { TitlesContext, TitlesContextType } from '../../contexts/TitlesContext';
 
 import {
   Card,
@@ -7,14 +9,20 @@ import {
   CardMedia,
   CardActionArea,
   Button,
+  IconButton,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box } from '@mui/system';
 
 const TheNewMediaCard = (props: any) => {
+  const { titles, favourites, updateTiltes, updateFavourites } = useContext(
+    TitlesContext
+  ) as TitlesContextType;
+
   const imgUrl = props.data.primaryImage
     ? props.data.primaryImage.url
-    : 'https://i.picsum.photos/id/504/536/354.jpg?hmac=zZqkNcPlphLOPXp316SfRWkNFXoyGEh2elLvfSptGcQ';
+    : 'not-found.png';
   const year = props.data?.releaseYear?.year
     ? props.data?.releaseYear?.year
     : 'No data';
@@ -30,6 +38,29 @@ const TheNewMediaCard = (props: any) => {
   const rating = props.data?.ratingsSummary?.aggregateRating
     ? `${props.data?.ratingsSummary?.aggregateRating}/10`
     : 'No data';
+
+  const onClickFavourite = () => {
+    // meg majd reorderelni kene
+    const copiedMovies = Array.from(titles);
+    const copiedFavourites = Array.from(favourites);
+
+    if (props.droppableId !== 'movies') {
+      const index = copiedFavourites.findIndex((object) => {
+        return object.id === props.data.id;
+      });
+      copiedFavourites.splice(index, 1);
+      copiedMovies.splice(index, 0, props.data);
+    } else {
+      const index = copiedMovies.findIndex((object) => {
+        return object.id === props.data.id;
+      });
+      copiedMovies.splice(index, 1);
+      copiedFavourites.splice(index, 0, props.data);
+    }
+
+    updateTiltes(copiedMovies);
+    updateFavourites(copiedFavourites);
+  };
   return (
     <Card sx={{ maxWidth: 400 }}>
       <Box>
@@ -53,6 +84,11 @@ const TheNewMediaCard = (props: any) => {
           <Typography variant="caption">{runTime}</Typography>
         </Box>
         <Box>
+          <IconButton aria-label="add to favorites" onClick={onClickFavourite}>
+            <FavoriteIcon
+              style={{ color: props.droppableId !== 'movies' ? 'red' : '' }}
+            />
+          </IconButton>
           <Link href={'/' + props.data.id}>
             <CardActionArea>
               <CardActions
