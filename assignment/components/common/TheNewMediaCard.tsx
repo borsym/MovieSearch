@@ -55,7 +55,7 @@ const TheNewMediaCard = (props: any) => {
               <CardActions
                 sx={{ display: 'flex', justifyContent: 'space-around' }}
               >
-                <Button size="small">Learn More</Button>
+                <Box>Learn More</Box>
               </CardActions>
             </CardActionArea>
           </Link>

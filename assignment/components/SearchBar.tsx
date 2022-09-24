@@ -31,12 +31,12 @@ const SearchBar = () => {
           startAdornment: (
             <>
               <InputAdornment position="start">
-                <IconButton>
-                  <SearchIcon
-                    onClick={() => {
-                      search(title, genres);
-                    }}
-                  />
+                <IconButton
+                  onClick={() => {
+                    search(title, genres);
+                  }}
+                >
+                  <SearchIcon />
                 </IconButton>
               </InputAdornment>
             </>
@@ -45,13 +45,13 @@ const SearchBar = () => {
             <>
               <Divider sx={{ height: 35, m: 0.5 }} orientation="vertical" />
               <InputAdornment position="end">
-                <IconButton>
-                  <ClearIcon
-                    onClick={() => {
-                      setTitle('');
-                      textInput.current.value = '';
-                    }}
-                  />
+                <IconButton
+                  onClick={() => {
+                    setTitle('');
+                    textInput.current.value = '';
+                  }}
+                >
+                  <ClearIcon />
                 </IconButton>
               </InputAdornment>
             </>

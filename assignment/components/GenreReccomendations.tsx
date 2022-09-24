@@ -9,8 +9,7 @@ const GenreReccomendations = () => {
   const urlGenres = new URL(
     'https://moviesdatabase.p.rapidapi.com/titles/utils/genres'
   );
-  console.log(options);
-  const { data, loading, error } = useFetch(urlGenres.toString(), options); // azert kell itt lennie mert csak bekerem a a genreket az osszeset a kivalasztottakat majd egy masik arrayben fogom tarolni sztm, ha jol gondolom es abba lesz a contexem
+  const { data, loading, error } = useFetch(urlGenres.toString(), options);
 
   const { genres, removeGenre, addGenre } = useContext(
     GenresContext

@@ -34,9 +34,9 @@ const Details = (props: any) => {
     ? details.primaryImage.caption.plainText
     : 'Image';
   const description = details.plot?.plotText?.plainText;
-  //https://hu.pinterest.com/pin/421649583858383060/
+
   return (
-    <Grid container spacing={0} sx={{ p: 10 }}>
+    <Grid container item spacing={0} sx={{ p: 10 }}>
       <Grid container item xs={12} md={6}>
         <Box
           component="img"
@@ -103,7 +103,11 @@ const Details = (props: any) => {
           </Typography>
         </Box>
       </Grid>
-      <Grid xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <Grid
+        item
+        xs={12}
+        sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}
+      >
         <Box>
           <Link href="/">
             <Button variant="contained" color="info">

@@ -1,11 +1,13 @@
 import { Grid } from '@mui/material';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { GetServerSideProps } from 'next';
+import { DragDropContext, resetServerContext } from 'react-beautiful-dnd';
 import Column from './Column';
 
 const DnD = (props: any) => {
   return (
     <DragDropContext onDragEnd={props.onDragEnd}>
       <Grid
+        item
         sx={{
           flexGrow: 1,
         }}
@@ -34,6 +36,19 @@ const DnD = (props: any) => {
       </Grid>
     </DragDropContext>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+
+  return {
+    props: {
+      titles: [],
+      onDragEnd: () => {},
+      lastTitleElementRef: null,
+      favourites: [],
+    },
+  };
 };
 
 export default DnD;
