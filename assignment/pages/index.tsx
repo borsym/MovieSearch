@@ -8,16 +8,20 @@ import Column from '../components/dnd/Column';
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import DnD from '../components/dnd/DnD';
-import { Button } from '@mui/material';
 import MediaCard from '../components/common/MediaCard';
 import TheNewMediaCard from '../components/common/TheNewMediaCard';
 
 const Home: NextPage = () => {
-  const { genres } = useContext(GenresContext) as GenreContextType;
-  const { titles, updateTiltes, fetchNextPage, nextUrl } = useContext(
-    TitlesContext
-  ) as TitlesContextType;
-  const [favourites, setFavourites] = useState<any[]>([]);
+  const {
+    titles,
+    nextUrl,
+    favourites,
+    updateTiltes,
+    fetchNextPage,
+    updateFavourites,
+  } = useContext(TitlesContext) as TitlesContextType;
+
+  // const [favourites, setFavourites] = useState<any[]>([]);
   const observer = useRef<any>();
   // We do not have to check the last element is moved to the fav col
   const lastTitleElementRef = useCallback(
@@ -36,11 +40,9 @@ const Home: NextPage = () => {
     [nextUrl] // loading?
   );
 
-  console.log('nextURL', nextUrl);
   // make a more cleaner code!
   const onDragEnd = (result: any) => {
     // this has to be more generic, maybe a new file where I store the data as a json where the columns has ID
-    console.log(result);
     const { source, destination, draggableId } = result;
     if (!destination) return;
 
@@ -70,7 +72,7 @@ const Home: NextPage = () => {
         const [reOrderdTitels] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reOrderdTitels);
 
-        setFavourites(items);
+        updateFavourites(items);
         return;
       }
     }
@@ -85,10 +87,10 @@ const Home: NextPage = () => {
 
     if (source.droppableId === 'movies') {
       updateTiltes(copiedStart);
-      setFavourites(copiedFinish);
+      updateFavourites(copiedFinish);
     } else {
       updateTiltes(copiedFinish);
-      setFavourites(copiedStart);
+      updateFavourites(copiedStart);
     }
   };
 

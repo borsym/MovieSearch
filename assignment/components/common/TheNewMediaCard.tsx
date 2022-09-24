@@ -51,8 +51,10 @@ const TheNewMediaCard = (props: any) => {
         </Box>
         <Box>
           <Link href={'/' + props.data.id}>
-            <CardActionArea sx={{ textAling: 'center' }}>
-              <CardActions>
+            <CardActionArea>
+              <CardActions
+                sx={{ display: 'flex', justifyContent: 'space-around' }}
+              >
                 <Button size="small">Learn More</Button>
               </CardActions>
             </CardActionArea>

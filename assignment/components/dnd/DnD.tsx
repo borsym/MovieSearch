@@ -12,25 +12,22 @@ const DnD = (props: any) => {
       >
         <Grid container spacing={3}>
           <Grid item container xs={6} alignContent="baseline">
-            <Grid
-              item
-              xs={12}
-              style={{
-                backgroundColor: 'yellow',
-              }}
-            >
-              <Column data={props.titles} droppableId="movies" lastTitleElementRef={props.lastTitleElementRef}/>
+            <Grid item xs={12}>
+              <Column
+                data={props.titles}
+                droppableId="movies"
+                lastTitleElementRef={props.lastTitleElementRef}
+                title="Movies"
+              />
             </Grid>
           </Grid>
           <Grid item container xs={6}>
-            <Grid
-              item
-              xs={12}
-              style={{
-                backgroundColor: 'red',
-              }}
-            >
-              <Column data={props.favourites} droppableId="favourite" />
+            <Grid item xs={12}>
+              <Column
+                data={props.favourites}
+                droppableId="favourite"
+                title="Favourites"
+              />
             </Grid>
           </Grid>
         </Grid>

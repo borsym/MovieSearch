@@ -1,7 +1,9 @@
-import { Grid, Rating, Typography } from '@mui/material';
+import { Grid, Rating, Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
+
 import React from 'react';
 import { options } from '../constans';
+import Link from 'next/link';
 
 export const getStaticPaths = async () => {
   return {
@@ -34,17 +36,8 @@ const Details = (props: any) => {
   const description = details.plot?.plotText?.plainText;
   //https://hu.pinterest.com/pin/421649583858383060/
   return (
-    <Grid container spacing={2}>
-      <Grid
-        container
-        item
-        xs={12}
-        md={6}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '100vh' }}
-      >
+    <Grid container spacing={0} sx={{ p: 10 }}>
+      <Grid container item xs={12} md={6}>
         <Box
           component="img"
           sx={{
@@ -59,40 +52,65 @@ const Details = (props: any) => {
       </Grid>
       <Grid container item xs={12} md={6} direction="column">
         <Box sx={{ width: '100%' }}>
-          <Typography variant="h3" align="center">
+          <Typography variant="h3" align="left" sx={{ p: 0, m: 0 }}>
             {details.titleText?.text}
           </Typography>
         </Box>
         <Box sx={{ width: '100%' }}>
-          <Typography variant="overline" display="block" align="center">
-            {details.plot.language?.id} / {details.titleType?.text} /{' '}
+          <Typography
+            variant="overline"
+            display="block"
+            align="left"
+            sx={{ ml: 1 }}
+          >
+            {details.plot?.language?.id} / {details.titleType?.text} /{' '}
             {details.releaseYear?.year}
           </Typography>
         </Box>
-        <Box sx={{ width: '100%' }}>
-          Stars
+        <Box sx={{ width: '100%', display: 'flex', align: 'left', ml: 1 }}>
+          <Typography sx={{ mr: 0.5, fontWeight: 'bold', color: '#FAAF00' }}>
+            {details.ratingsSummary?.aggregateRating}{' '}
+          </Typography>
           <Rating
             name="read-only"
             value={Math.round(details.ratingsSummary?.aggregateRating) / 2}
             readOnly
           />
-          {details.ratingsSummary?.aggregateRating}
         </Box>
         <Box>
-          <Typography>
-            {details.genres?.genres.map((genre: any) => genre.text + '/')}
+          <Typography
+            sx={{ ml: 1, opacity: 0.6, lineHeight: 1.9, fontSize: 14 }}
+            variant="overline"
+            align="left"
+          >
+            {details.genres?.genres.map((genre: any, idx: number) => {
+              return details.genres?.genres.length !== idx + 1
+                ? genre.text + ' / '
+                : genre.text;
+            })}
           </Typography>
         </Box>
-        <Box>
-          <Typography gutterBottom variant="h6" component="div">
+        <Box sx={{ pt: 8, ml: 1 }}>
+          <Typography
+            gutterBottom
+            variant="h5"
+            sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}
+          >
+            synopsis
+          </Typography>
+          <Typography gutterBottom paragraph component="div">
             {description ? description : 'No documentation'}
           </Typography>
         </Box>
-        {/* <Grid>Ratings/ language</Grid>
-          <Grid>Genreken vegig menni es / jelekkel kiirni</Grid>
-          <Grid>relase/ language</Grid>
-          <Grid>Title type tv series vagy movie</Grid>
-          <Grid>long description</Grid> */}
+      </Grid>
+      <Grid xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        <Box>
+          <Link href="/">
+            <Button variant="contained" color="info">
+              Main Page
+            </Button>
+          </Link>
+        </Box>
       </Grid>
     </Grid>
   );

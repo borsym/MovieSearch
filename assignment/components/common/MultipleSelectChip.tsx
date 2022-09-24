@@ -42,8 +42,8 @@ const MultipleSelectChip = (props: any) => {
   return props.loading ? (
     <></>
   ) : (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+    <Box sx={{ pl: '40%', pr: '40%' }}>
+      <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">{props.title}</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
@@ -74,7 +74,7 @@ const MultipleSelectChip = (props: any) => {
             ))}
         </Select>
       </FormControl>
-    </div>
+    </Box>
   );
 };
 
