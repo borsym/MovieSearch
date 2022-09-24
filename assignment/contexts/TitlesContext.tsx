@@ -35,6 +35,7 @@ export const TitlesProvider = (props: any) => {
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   const search = async (title: string, genres: string[]) => {
+    if (!title || title.length === 0) return;
     /// check if i can use the useFetch
     let res;
     if (genres.length !== 0) {
