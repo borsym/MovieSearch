@@ -20,37 +20,50 @@ const MenuProps = {
   },
 };
 
-function getStyles(name: string, context: readonly string[], theme: Theme) {
+const getStyles = (name: string, context: readonly string[], theme: Theme) => {
   return {
     fontWeight:
       context.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
-}
+};
 
-const MultipleSelectChip = (props: any) => {
+interface Props {
+  loading: boolean;
+  title: string;
+  items: any[]; // TODO
+  context: string[];
+  add: (genre: string[]) => void;
+}
+const MultipleSelectChip: React.FC<Props> = ({
+  loading,
+  title,
+  items,
+  context,
+  add,
+}) => {
   const theme = useTheme();
 
-  const handleChange = (event: SelectChangeEvent<typeof props.items>) => {
+  const handleChange = (event: SelectChangeEvent<typeof items>) => {
     // get the array from the event
     const {
       target: { value },
     } = event;
     // the array is passed to the add, so we always give a new array
-    props.add(typeof value === 'string' ? value.split(',') : value);
+    add(typeof value === 'string' ? value.split(',') : value);
   };
-  return props.loading ? (
+  return loading ? (
     <></>
   ) : (
     <Box sx={{ pl: '40%', pr: '40%' }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-multiple-chip-label">{props.title}</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">{title}</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={props.context}
+          value={context}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -62,13 +75,13 @@ const MultipleSelectChip = (props: any) => {
           )}
           MenuProps={MenuProps}
         >
-          {props.items
+          {items
             ?.filter((e: any) => e)
             .map((name: any) => (
               <MenuItem
                 key={name}
                 value={name}
-                style={getStyles(name, props.context, theme)}
+                style={getStyles(name, context, theme)}
               >
                 {name}
               </MenuItem>

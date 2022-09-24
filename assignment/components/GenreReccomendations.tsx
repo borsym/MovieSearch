@@ -5,7 +5,6 @@ import MultipleSelectChip from './common/MultipleSelectChip';
 
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 
-
 import { options } from '../constans';
 
 const GenreReccomendations = () => {
@@ -14,9 +13,7 @@ const GenreReccomendations = () => {
   );
   const { data, loading, error } = useFetch(urlGenres.toString(), options);
 
-  const { genres, removeGenre, addGenre } = useContext(
-    GenresContext
-  ) as GenreContextType;
+  const { genres, addGenre } = useContext(GenresContext) as GenreContextType;
 
   return loading ? (
     <></>
@@ -25,7 +22,6 @@ const GenreReccomendations = () => {
       items={data?.results}
       loading={loading}
       context={genres}
-      remove={removeGenre}
       add={addGenre}
       title="Genres"
     />

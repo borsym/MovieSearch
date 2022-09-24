@@ -26,7 +26,7 @@ export const getStaticProps = async (context: any) => {
 };
 
 const Details = (props: any) => {
-  const details = props.details?.results;
+  const details = props.details?.results; // ?? 
   const imgUrl = details.primaryImage
     ? details.primaryImage.url
     : 'not-found.png';

@@ -21,17 +21,17 @@ const Home: NextPage = (props) => {
     updateTiltes,
     fetchNextPage,
     updateFavourites,
-  } = useContext(TitlesContext) as TitlesContextType;
+  } = useContext<TitlesContextType>(TitlesContext);
+
   const [isBrowser, setIsBrowser] = useState(false); // next + r-beut-dnd not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
   const observer = useRef<any>();
 
   useEffect(() => {
     setIsBrowser(process.browser);
   }, []);
-  // We do not have to check the last element is moved to the fav col
+
   const lastTitleElementRef = useCallback(
     (node: any) => {
-      // if(loading) return; ?
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextUrl !== null) {
@@ -97,7 +97,7 @@ const Home: NextPage = (props) => {
       updateFavourites(copiedStart);
     }
   };
-  
+
   return (
     <>
       <SearchBar id="back-to-top-anchor" />

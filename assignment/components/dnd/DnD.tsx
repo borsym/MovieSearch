@@ -1,4 +1,4 @@
-import Column from './Column';
+import MovieCard from './MovieCard';
 
 import { Grid } from '@mui/material';
 
@@ -16,7 +16,7 @@ const DnD = (props: any) => {
         <Grid container spacing={3}>
           <Grid item container xs={6} alignContent="baseline">
             <Grid item xs={12}>
-              <Column
+              <MovieCard
                 data={props.titles}
                 droppableId="movies"
                 lastTitleElementRef={props.lastTitleElementRef}
@@ -26,7 +26,7 @@ const DnD = (props: any) => {
           </Grid>
           <Grid item container xs={6}>
             <Grid item xs={12}>
-              <Column
+              <MovieCard
                 data={props.favourites}
                 droppableId="favourite"
                 title="Favourites"

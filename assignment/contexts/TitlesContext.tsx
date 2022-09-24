@@ -1,18 +1,16 @@
-import React, {
-  createContext,
-  useState,
-} from 'react';
+import React, { createContext, useState } from 'react';
 import { baseUrl, options } from '../constans';
 import useFetch from '../hooks/useFetch';
+import { TitleProps } from '../types';
 
 export type TitlesContextType = {
-  titles: any[];
-  favourites: any[];
+  titles: TitleProps[];
+  favourites: TitleProps[];
   nextUrl: string | null;
   search: (title: string, genres: string[]) => void;
   fetchNextPage: () => void;
-  updateTiltes: (titels: any[]) => void;
-  updateFavourites: (favourites: any[]) => void;
+  updateTiltes: (titels: TitleProps[]) => void;
+  updateFavourites: (favourites: TitleProps[]) => void;
 };
 
 export const TitlesContext = createContext<TitlesContextType>({
@@ -26,14 +24,15 @@ export const TitlesContext = createContext<TitlesContextType>({
 });
 
 export const TitlesProvider = (props: any) => {
-  const [titles, setTitles] = useState<any[]>([]);
-  const [favourites, setFavourites] = useState<any[]>([]);
+  const [titles, setTitles] = useState<TitleProps[]>([]);
+  const [favourites, setFavourites] = useState<TitleProps[]>([]);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   const search = async (title: string, genres: string[]) => {
     if (!title || title.length === 0) return;
-    /// check if i can use the useFetch
+
     let res;
+    // TODO
     if (genres.length !== 0) {
       res = await fetch(
         `${baseUrl}/titles/search/title/${title}?info=base_info&limit=10&page=1&genre=${genres[0]}`,

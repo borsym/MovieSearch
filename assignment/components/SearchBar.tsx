@@ -9,7 +9,11 @@ import { InputAdornment, Divider } from '@mui/material';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 
-const SearchBar = ({ id }: any) => {
+interface Props {
+  id: any;
+}
+
+const SearchBar: React.FC<Props> = ({ id }) => {
   const { search } = useContext(TitlesContext) as TitlesContextType;
   const { genres } = useContext(GenresContext) as GenreContextType;
   const [title, setTitle] = useState<string>('');

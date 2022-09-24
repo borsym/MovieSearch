@@ -1,7 +1,12 @@
 import Widget from './Widget';
 
-const WidgetList = ({ data, lastTitleElementRef, droppableId }: any) => {
-  return data?.map((element: any, index: any) => {
+const WidgetList = ({
+  data,
+  lastTitleElementRef,
+  droppableId,
+  filterFn = () => true,
+}: any) => {
+  return data?.filter(filterFn).map((element: any, index: any) => {
     if (data.length === index + 1) {
       return (
         <Widget
@@ -9,7 +14,7 @@ const WidgetList = ({ data, lastTitleElementRef, droppableId }: any) => {
           index={index}
           key={element.id}
           lastTitleElementRef={lastTitleElementRef}
-          droppableId={droppableId} 
+          droppableId={droppableId}
         />
       );
     }
