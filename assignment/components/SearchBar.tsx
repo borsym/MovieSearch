@@ -9,14 +9,14 @@ import { InputAdornment, Divider } from '@mui/material';
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 import { GenreContextType, GenresContext } from '../contexts/GenresContext';
 
-const SearchBar = () => {
+const SearchBar = ({ id }: any) => {
   const { search } = useContext(TitlesContext) as TitlesContextType;
   const { genres } = useContext(GenresContext) as GenreContextType;
   const [title, setTitle] = useState<string>('');
   const textInput = useRef<React.MutableRefObject<null>>(null);
 
   return (
-    <Box sx={{ px: 8, pt: 5, pb: 2, display: 'flex' }}>
+    <Box sx={{ px: 8, pt: 5, pb: 2, display: 'flex' }} id={id}>
       <TextField
         inputRef={textInput}
         onKeyDown={(e) => {

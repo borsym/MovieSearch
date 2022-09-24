@@ -7,7 +7,13 @@ import DnD from '../components/dnd/DnD';
 
 import { TitlesContext, TitlesContextType } from '../contexts/TitlesContext';
 
-const Home: NextPage = () => {
+import { KeyboardArrowUp } from '@mui/icons-material';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import { Box, Zoom, Fab } from '@mui/material';
+import ScrollToTop from '../components/common/ScrollToTop';
+import Toolbar from '@mui/material/Toolbar';
+
+const Home: NextPage = (props) => {
   const {
     titles,
     nextUrl,
@@ -17,7 +23,6 @@ const Home: NextPage = () => {
     updateFavourites,
   } = useContext(TitlesContext) as TitlesContextType;
   const [isBrowser, setIsBrowser] = useState(false); // next + r-beut-dnd not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
-
   const observer = useRef<any>();
 
   useEffect(() => {
@@ -92,10 +97,10 @@ const Home: NextPage = () => {
       updateFavourites(copiedStart);
     }
   };
-  // minden searchnel varok 1mpt ha nincs valtozas akkor hajtodig vegre a search ha van akkor ujra indul a timer
+  
   return (
     <>
-      <SearchBar />
+      <SearchBar id="back-to-top-anchor" />
       <GenreReccomendations />
       {isBrowser ? (
         <DnD
@@ -105,6 +110,11 @@ const Home: NextPage = () => {
           lastTitleElementRef={lastTitleElementRef}
         />
       ) : null}
+      <ScrollToTop {...props}>
+        <Fab size="small" aria-label="scroll back to top">
+          <KeyboardArrowUp />
+        </Fab>
+      </ScrollToTop>
     </>
   );
 };
