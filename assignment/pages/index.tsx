@@ -11,6 +11,7 @@ import { KeyboardArrowUp } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { TitleProps } from '../types';
 
 const Home: NextPage = (props) => {
   const {
@@ -22,7 +23,7 @@ const Home: NextPage = (props) => {
     updateFavourites,
   } = useContext<TitlesContextType>(TitlesContext);
 
-  const [isBrowser, setIsBrowser] = useState(false); // next + r-beut-dnd not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
+  const [isBrowser, setIsBrowser] = useState<boolean>(false); // next + r-beut-dnd not compatible with dnd https://github.com/atlassian/react-beautiful-dnd/issues/2175
   const observer = useRef<IntersectionObserver>();
 
   useEffect(() => {
@@ -40,41 +41,27 @@ const Home: NextPage = (props) => {
       });
       if (node) observer.current.observe(node);
     },
-    [nextUrl] // loading?
+    [nextUrl]
   );
 
   // make a more cleaner code!
   const onDragEnd = (result: any) => {
     // this has to be more generic, maybe a new file where I store the data as a json where the columns has ID
     const { source, destination, draggableId } = result;
+    
     if (!destination) return;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
+    if (noMovement(destination, source)) return;
 
     const start = source.droppableId === 'movies' ? titles : favourites;
     const finish = destination.droppableId === 'movies' ? titles : favourites;
 
     if (start === finish) {
       if (source.droppableId === 'movies') {
-        const items = Array.from(titles);
-        const [reOrderdTitels] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reOrderdTitels);
+        const items = reOrderedColumns(titles, result);
         updateTiltes(items);
         return;
       } else {
-        const items = Array.from(favourites);
-        const [reOrderdTitels] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reOrderdTitels);
-
+        const items = reOrderedColumns(favourites, result);
         updateFavourites(items);
         return;
       }
@@ -95,6 +82,20 @@ const Home: NextPage = (props) => {
       updateTiltes(copiedFinish);
       updateFavourites(copiedStart);
     }
+  };
+
+  const noMovement = (destination: any, source: any) => {
+    return (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    );
+  };
+
+  const reOrderedColumns = (arr: TitleProps[], result: any): TitleProps[] => {
+    const items = Array.from(arr);
+    const [reOrderdTitels] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reOrderdTitels);
+    return items;
   };
 
   return (

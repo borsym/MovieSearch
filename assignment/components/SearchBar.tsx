@@ -14,8 +14,8 @@ interface Props {
 }
 
 const SearchBar: React.FC<Props> = ({ id }) => {
-  const { search } = useContext(TitlesContext) as TitlesContextType;
-  const { genres } = useContext(GenresContext) as GenreContextType;
+  const { search } = useContext<TitlesContextType>(TitlesContext);
+  const { genres } = useContext<GenreContextType>(GenresContext);
   const [title, setTitle] = useState<string>('');
   const textInput = useRef<React.MutableRefObject<null>>(null);
 

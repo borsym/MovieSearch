@@ -1,5 +1,5 @@
 import React from 'react';
-import { Result, TitleProps } from '../../types';
+import { TitleProps } from '../../types';
 import Widget from './Widget';
 
 interface Props {
