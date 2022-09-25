@@ -1,8 +1,6 @@
-import SearchBar from '../components/SearchBar';
 import { GenresProvider } from '../contexts/GenresContext';
 import { TitlesProvider } from '../contexts/TitlesContext';
 import Home from './';
-import Details from './[id]';
 
 // Constants for the selectors
 const searchBarSelector = '[data-cy=searchbar]';
