@@ -22,6 +22,7 @@ const SearchBar: React.FC<Props> = ({ id }) => {
   return (
     <Box sx={{ px: 8, pt: 5, pb: 2, display: 'flex' }} id={id}>
       <TextField
+        data-cy="searchbar"
         inputRef={textInput}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -37,6 +38,7 @@ const SearchBar: React.FC<Props> = ({ id }) => {
             <>
               <InputAdornment position="start">
                 <IconButton
+                  data-cy="input-search"
                   onClick={() => {
                     search(title, genres);
                   }}
@@ -51,6 +53,7 @@ const SearchBar: React.FC<Props> = ({ id }) => {
               <Divider sx={{ height: 35, m: 0.5 }} orientation="vertical" />
               <InputAdornment position="end">
                 <IconButton
+                  data-cy="input-clear"
                   onClick={() => {
                     setTitle('');
                     textInput.current.value = '';

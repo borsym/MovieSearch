@@ -11,7 +11,7 @@ interface Props {
   data: TitleProps[];
   title: string;
   droppableId: string;
-  lastTitleElementRef: () => {};
+  lastTitleElementRef?: () => {};
 }
 
 const MovieCard: React.FC<Props> = ({

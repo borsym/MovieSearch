@@ -27,7 +27,7 @@ const DnD: React.FC<Props> = ({
       >
         <Grid container spacing={3}>
           <Grid item container xs={6} alignContent="baseline">
-            <Grid item xs={12}>
+            <Grid item xs={12} data-cy="movies-block">
               <MovieCard
                 data={titles}
                 droppableId="movies"
